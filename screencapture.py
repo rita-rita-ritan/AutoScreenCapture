@@ -49,7 +49,9 @@ def increment_value_with_reset(value, threshold):
 
 @Gooey(
     program_name="AutoScreenCapture",
-    tabbed_groups=True
+    tabbed_groups=True,
+    progress_regex=r"^progress: (\d+)/(\d+)$",
+    progress_expr="x[0] / x[1] * 100",
 )
 def main():
     parser = GooeyParser(description="Multi-platform program that automatically takes screenshots.")
@@ -78,11 +80,11 @@ def main():
     display = args.display
     movie_interval = args.movie_interval
 
-
-    subprocess.run(["mkdir", "-p", directory])
+    print(f"progress: 0/{timeout_minute}")
 
     start_time = time.time()
-    elapsed_time = 0
+    elapsed_time_second = 0
+    elapsed_time_minute = 0
     saved_image_number = init_saved_image_number(directory)
     timeout_second = timeout_minute * 60
     successive_non_similar_count = 0
@@ -92,7 +94,7 @@ def main():
     saved_image_number += 1
     pre_image = current_image
 
-    while elapsed_time < timeout_second:
+    while elapsed_time_second < timeout_second:
         current_image = get_screenshot_image(display)
 
         if is_similar_image(current_image, pre_image, similarity_tolerance):
@@ -105,7 +107,10 @@ def main():
             successive_non_similar_count = increment_value_with_reset(successive_non_similar_count, movie_interval)
 
         pre_image = current_image
-        elapsed_time = time.time() - start_time
+        elapsed_time_second = time.time() - start_time
+        if elapsed_time_minute != int(elapsed_time_second/60):
+            elapsed_time_minute = int(elapsed_time_second/60)
+            print(f"progress: {elapsed_time_minute}/{timeout_minute}")
         time.sleep(interval)
     
 
