@@ -5,7 +5,7 @@ import imagehash
 import argparse
 import mss
 import pathlib
-from gooey import Gooey
+from gooey import Gooey, GooeyParser
 
 def init_saved_image_number(directory):
     # 前回と同じディレクトリに再び保存する場合に、前回の保存写真の後に続くようにナンバリングする
@@ -45,14 +45,20 @@ def increment_value_with_reset(value, threshold):
     value += 1
     if value >= threshold:
         value = 0
+    return value
 
-@Gooey
+@Gooey(
+    program_name="AutoScreenCapture",
+    tabbed_groups=True
+)
 def main():
-    parser = argparse.ArgumentParser()
+    parser = GooeyParser(description="Multi-platform program that automatically takes screenshots.")
     parser.add_argument("directory", 
-        help="Directory where screenshots will be saved. If the specified directory does not exist, a new directory will be created.")
+        help="Directory where screenshots will be saved.",
+        widget='DirChooser')
     parser.add_argument("-i", "--interval", type=int, help="Time interval for taking a screenshot. default=4", default=4)
-    parser.add_argument("-t", "--timeout", type=int, help="Time to keep taking screenshots (minutes). default=120", default=120)
+    parser.add_argument("-t", "--timeout", type=int, 
+        help="Time to keep taking screenshots (minutes). default=120", default=120)
     parser.add_argument("-s", "--similarity_tolerance", type=int,
         help="Maximum value of the Hamming distance at which two screenshots are considered to be similar. The larger this value is, the more likely it is that the same page of slides will be saved multiple times. default=5", 
         default=5)
@@ -96,7 +102,7 @@ def main():
             if not is_movie(successive_non_similar_count):
                 current_image.save(f'{directory}/sct-{saved_image_number}.jpg', 'JPEG')
                 saved_image_number += 1
-            increment_value_with_reset(successive_non_similar_count, movie_interval)
+            successive_non_similar_count = increment_value_with_reset(successive_non_similar_count, movie_interval)
 
         pre_image = current_image
         elapsed_time = time.time() - start_time
