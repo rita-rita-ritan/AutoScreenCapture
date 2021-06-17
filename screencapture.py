@@ -45,8 +45,31 @@ def increment_value_with_reset(value, threshold):
     if value >= threshold:
         value = 0
 
-def main(directory, interval, timeout_minute, 
-            similarity_tolerance, display, movie_interval):
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("directory", 
+        help="Directory where screenshots will be saved. If the specified directory does not exist, a new directory will be created.")
+    parser.add_argument("-i", "--interval", type=int, help="Time interval for taking a screenshot. default=4", default=4)
+    parser.add_argument("-t", "--timeout", type=int, help="Time to keep taking screenshots (minutes). default=120", default=120)
+    parser.add_argument("-s", "--similarity_tolerance", type=int,
+        help="Maximum value of the Hamming distance at which two screenshots are considered to be similar. The larger this value is, the more likely it is that the same page of slides will be saved multiple times. default=5", 
+        default=5)
+    parser.add_argument("-d", "--display", type=int,
+        help="Display where the screenshot will be taken. 1 is main, 2 secondary, etc. default=1",
+        default=1)
+    parser.add_argument("-m", "--movie_interval", type=int,
+        help="(beta) Time interval to save the video. For example, 1 if it is the same as the interval of time to take a screenshot, and 2 if it is twice as long. This option is still in beta, so it may not work properly for you. default=1", 
+        default=1)
+
+    args = parser.parse_args()
+
+    directory = args.directory
+    interval = args.interval
+    timeout_minute = args.timeout
+    similarity_tolerance = args.similarity_tolerance
+    display = args.display
+    movie_interval = args.movie_interval
+
 
     subprocess.run(["mkdir", "-p", directory])
 
@@ -79,22 +102,4 @@ def main(directory, interval, timeout_minute,
     
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("directory", 
-        help="Directory where screenshots will be saved. If the specified directory does not exist, a new directory will be created.")
-    parser.add_argument("-i", "--interval", type=int, help="Time interval for taking a screenshot. default=4", default=4)
-    parser.add_argument("-t", "--timeout", type=int, help="Time to keep taking screenshots (minutes). default=120", default=120)
-    parser.add_argument("-s", "--similarity_tolerance", type=int,
-        help="Maximum value of the Hamming distance at which two screenshots are considered to be similar. The larger this value is, the more likely it is that the same page of slides will be saved multiple times. default=5", 
-        default=5)
-    parser.add_argument("-d", "--display", type=int,
-        help="Display where the screenshot will be taken. 1 is main, 2 secondary, etc. default=1",
-        default=1)
-    parser.add_argument("-m", "--movie_interval", type=int,
-        help="(beta) Time interval to save the video. For example, 1 if it is the same as the interval of time to take a screenshot, and 2 if it is twice as long. This option is still in beta, so it may not work properly for you. default=1", 
-        default=1)
-    args = parser.parse_args()
-
-    main(args.directory, args.interval, 
-        args.timeout, args.similarity_tolerance, 
-        args.display, args.movie_interval)
+    main()
