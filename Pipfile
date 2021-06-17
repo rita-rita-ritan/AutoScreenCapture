@@ -9,6 +9,7 @@ verify_ssl = true
 pillow = "*"
 imagehash = "*"
 mss = "*"
+gooey = "*"
 
 [requires]
 python_version = "3.8"
