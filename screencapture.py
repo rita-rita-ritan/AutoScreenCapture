@@ -5,6 +5,7 @@ import imagehash
 import argparse
 import mss
 import pathlib
+from gooey import Gooey
 
 def init_saved_image_number(directory):
     # 前回と同じディレクトリに再び保存する場合に、前回の保存写真の後に続くようにナンバリングする
@@ -45,6 +46,7 @@ def increment_value_with_reset(value, threshold):
     if value >= threshold:
         value = 0
 
+@Gooey
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("directory", 
