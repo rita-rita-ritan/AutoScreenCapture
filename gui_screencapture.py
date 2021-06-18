@@ -47,11 +47,38 @@ def increment_value_with_reset(value, threshold):
         value = 0
     return value
 
-
+@Gooey(
+    program_name="AutoScreenCapture",
+    tabbed_groups=True,
+    progress_regex=r"^progress: (\d+)/(\d+)$",
+    progress_expr="x[0] / x[1] * 100",
+    menu=[{
+        'name': 'File',
+        'items': [{
+                'type': 'AboutDialog',
+                'menuTitle': 'About',
+                'name': 'AutoScreenCapture',
+                'version': '1.0',
+                'website': 'https://github.com/rita-rita-ritan/AutoScreenCapture',
+                'developer': 'Rita Shioya: https://ritan.netlify.app/overview.html',
+                'description': "License: MIT"
+            },{
+                'type': 'Link',
+                'menuTitle': 'Developer (Twitter)',
+                'url': 'https://twitter.com/rita_rita_ritan'
+            },{
+                'type': 'Link',
+                'menuTitle': 'Source Code (GitHub)',
+                'url': 'https://github.com/rita-rita-ritan/AutoScreenCapture'
+            }]
+        },
+    ]
+)
 def main():
-    parser = argparse.ArgumentParser()
+    parser = GooeyParser(description="Multi-platform program that automatically takes screenshots.")
     parser.add_argument("directory", 
-        help="Directory where screenshots will be saved.")
+        help="Directory where screenshots will be saved.",
+        widget='DirChooser')
     parser.add_argument("-i", "--interval", type=int, help="Time interval for taking a screenshot. default=4", default=4)
     parser.add_argument("-t", "--timeout", type=int, 
         help="Time to keep taking screenshots (minutes). default=120", default=120)
@@ -73,8 +100,6 @@ def main():
     similarity_tolerance = args.similarity_tolerance
     display = args.display
     movie_interval = args.movie_interval
-
-    subprocess.run(["mkdir", "-p", directory])
 
     print("Directory:", directory)
     print(f"progress: 0/{timeout_minute}")
