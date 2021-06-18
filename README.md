@@ -34,7 +34,7 @@ The producer is not responsible for any problems that may arise from the use of 
 If you want to take a screenshot of the sub-display, set "--display" to 2. If you are using more than two displays, you may need to set it to an integer greater than 2. Try using the program a few times to see which numbers correspond to which displays.
 
 ### Suspending and Resuming Program
-Interrupting the program will not erase the saved screenshot file. The program will display "Interruption can corrupt your data!", but this is a problem with the framework we are using for development, so don't worry about it. If your saved file disappears, please contact us.
+Interrupting the program will not erase the saved screenshot file. The program will display "Interruption can corrupt your data!", but this is a problem with the framework we are using for development, so don't worry about it. If your saved file disappears, please [contact me](https://twitter.com/rita_rita_ritan).
 
 If you save the screenshot again in the same directory, the file name number will be assigned to follow the end of the previous screenshot file.
 
