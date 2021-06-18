@@ -75,7 +75,7 @@ def increment_value_with_reset(value, threshold):
     ]
 )
 def main():
-    parser = GooeyParser(description="Multi-platform program that automatically takes screenshots.")
+    parser = GooeyParser(description="Cross-platform program that automatically takes screenshots.")
     parser.add_argument("directory", 
         help="Directory where screenshots will be saved.",
         widget='DirChooser')
