@@ -101,6 +101,7 @@ def main():
     display = args.display
     movie_interval = args.movie_interval
 
+    print("Directory:", directory)
     print(f"progress: 0/{timeout_minute}")
 
     start_time = time.time()
@@ -112,6 +113,7 @@ def main():
 
     current_image = get_screenshot_image(display)
     current_image.save(f'{directory}/sct-{saved_image_number}.jpg', 'JPEG')
+    print(f"Saved screenshot: sct-{saved_image_number}.jpg\n")
     saved_image_number += 1
     pre_image = current_image
 
@@ -121,13 +123,14 @@ def main():
         if is_similar_image(current_image, pre_image, similarity_tolerance):
             successive_non_similar_count = 0
         else:
-            print(calculate_hamming_distance(current_image, pre_image))
             if not is_movie(successive_non_similar_count):
                 current_image.save(f'{directory}/sct-{saved_image_number}.jpg', 'JPEG')
+                print(f"Saved screenshot: sct-{saved_image_number}.jpg")
+                print("(Hamming Distance)", calculate_hamming_distance(current_image, pre_image), "\n")
                 saved_image_number += 1
             successive_non_similar_count = increment_value_with_reset(successive_non_similar_count, movie_interval)
+            pre_image = current_image
 
-        pre_image = current_image
         elapsed_time_second = time.time() - start_time
         if elapsed_time_minute != int(elapsed_time_second/60):
             elapsed_time_minute = int(elapsed_time_second/60)
