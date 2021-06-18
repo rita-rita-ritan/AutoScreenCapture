@@ -35,7 +35,7 @@ $ pipenv shell
 $ python screencapture.py test-directory
 ```
 
-## 📸 Caution
+## ❗️ Caution
 The developer of this program is not responsible for any problems that may arise from the use of this program. If you have an important class or presentation where you cannot miss a single page of slides, please consider carefully whether to use this program.
 
 ## 📸 Tips
@@ -97,3 +97,10 @@ I don't know if I'll actually work on it, but here are some things I think could
 * Distribution in the form of an application that launches when clicked
 * Improving page-turning detection accuracy.
 * Verification of the video detection function
+
+## 🎫 License
+* [MIT](https://choosealicense.com/licenses/mit/)
+
+## 👀 Developer
+* [Twitter](https://twitter.com/rita_rita_ritan)
+* [Portfolio](https://ritan.netlify.app/overview.html)
