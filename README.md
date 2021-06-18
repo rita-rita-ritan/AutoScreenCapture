@@ -36,7 +36,7 @@ $ python screencapture.py test-directory
 ```
 
 ## 📸 Caution
-The producer is not responsible for any problems that may arise from the use of this program. If you have an important class or presentation where you cannot miss a single page of slides, please consider carefully whether to use this program.
+The creator of this program is not responsible for any problems that may arise from the use of this program. If you have an important class or presentation where you cannot miss a single page of slides, please consider carefully whether to use this program.
 
 ## 📸 Tips
 ### Screenshot of Sub-display
