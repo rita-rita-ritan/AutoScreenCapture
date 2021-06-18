@@ -52,6 +52,27 @@ def increment_value_with_reset(value, threshold):
     tabbed_groups=True,
     progress_regex=r"^progress: (\d+)/(\d+)$",
     progress_expr="x[0] / x[1] * 100",
+    menu=[{
+        'name': 'File',
+        'items': [{
+                'type': 'AboutDialog',
+                'menuTitle': 'About',
+                'name': 'AutoScreenCapture',
+                'version': '1.0',
+                'website': 'https://github.com/rita-rita-ritan/AutoScreenCapture',
+                'developer': 'Rita Shioya: https://ritan.netlify.app/overview.html',
+                'description': "License: MIT"
+            },{
+                'type': 'Link',
+                'menuTitle': 'Developer (Twitter)',
+                'url': 'https://twitter.com/rita_rita_ritan'
+            },{
+                'type': 'Link',
+                'menuTitle': 'Source Code (GitHub)',
+                'url': 'https://github.com/rita-rita-ritan/AutoScreenCapture'
+            }]
+        },
+    ]
 )
 def main():
     parser = GooeyParser(description="Multi-platform program that automatically takes screenshots.")
