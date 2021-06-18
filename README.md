@@ -1,12 +1,14 @@
 # AutoScreenCapture
 AutoScreenCapture is a cross-platform program that automatically takes screenshots for you. 
 
-* <u>Cross-Platform</u>: Mac, Linux, Windows (Only tested on Mac, but should work on Linux and Windows as well. If not work on Linux or Windows, please [contact me](https://twitter.com/rita_rita_ritan))
-* Support for <u>Multiple Displays</u>
-* <u>Both GUI and CUI</u> are supported
-* Equipped with <u>Slide Page-Turning Detection</u> function, which prevent you from saving the same page of slides over and over again.
+## 📸 Feature
 
-## Setup
+* <b>Cross-Platform</b>: Mac, Linux, Windows (Only tested on Mac, but should work on Linux and Windows as well. If not work on Linux or Windows, please [contact me](https://twitter.com/rita_rita_ritan))
+* Support for <b>Multiple Displays</b>
+* <b>Both GUI and CUI</b> are supported
+* Equipped with <b>Slide Page-Turning Detection</b> function, which prevent you from saving the same page of slides over and over again.
+
+## 📸 Setup
 [Install Pipenv](https://pipenv.pypa.io/en/latest/install/) and then
 ```
 $ pipenv sync
@@ -14,22 +16,22 @@ $ pipenv sync
 
 You can also manually pip install the libraries you need.
 
-## Quick Start
+## 📸 Quick Start
 
 ```
 $ pipenv shell
 $ python gui_screencapture.py
 ```
-## Quick Start for CUI Lovers
+## 📸 Quick Start for CUI Lovers
 ```
 $ pipenv shell
 $ python screencapture.py test-directory
 ```
 
-## Caution
+## 📸 Caution
 The producer is not responsible for any problems that may arise from the use of this program. If you have an important class or presentation where you cannot miss a single page of slides, please consider carefully whether to use this program.
 
-## Tips
+## 📸 Tips
 ### Screenshot of Sub-display
 If you want to take a screenshot of the sub-display, set "--display" to 2. If you are using more than two displays, you may need to set it to an integer greater than 2. Try using the program a few times to see which numbers correspond to which displays.
 
@@ -47,7 +49,7 @@ If you want to reduce the number of screenshots only for the video part, set "--
 ### Very Short Intervals
 If the value of "--interval" is very small, the program may not work properly. It is recommended that you do not make it smaller than the default value.
 
-## CUI Usage
+## 📸 CUI Usage
 
 ```
 usage: screencapture.py [-h] [-i INTERVAL] [-t TIMEOUT]
@@ -83,7 +85,7 @@ optional arguments:
 
 ```
 
-## TODO
+## 📸 TODO
 I don't know if I'll actually work on it, but here are some things I think could be improved about this program
 * Distribution in the form of an application that launches when clicked
 * Improving page-turning detection accuracy.
