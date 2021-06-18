@@ -8,6 +8,13 @@ AutoScreenCapture is a cross-platform program that automatically takes screensho
 * <b>Both GUI and CUI</b> are supported
 * Equipped with <b>Slide Page-Turning Detection</b> function, which prevent you from saving the same page of slides over and over again.
 
+<table>
+<tr>
+<td><img src="https://user-images.githubusercontent.com/38023004/122553526-c0893a00-d072-11eb-9b67-bf663ba34a5a.png"></td>
+<td><img src="https://user-images.githubusercontent.com/38023004/122553849-2b3a7580-d073-11eb-84dc-cfc9964e9bce.png"></td>
+</tr>
+</table>
+
 ## 📸 Setup
 [Install Pipenv](https://pipenv.pypa.io/en/latest/install/) and then
 ```
