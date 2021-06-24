@@ -1,10 +1,14 @@
 import subprocess
 import time
+import signal
+import sys
+import os
 from PIL import Image
 import imagehash
 import argparse
 import mss
 import pathlib
+import img2pdf
 from gooey import Gooey, GooeyParser
 
 def init_saved_image_number(directory):
@@ -47,6 +51,13 @@ def increment_value_with_reset(value, threshold):
         value = 0
     return value
 
+def convert2pdf(directory, name):
+    fpictures = list(map(lambda f: os.path.join(directory, f), os.listdir(directory)))
+    fpictures = list(filter(lambda f: f.endswith(".jpg"), fpictures))
+    fpictures = list(sorted(fpictures, key=lambda f: int(f.split("sct-")[1].split(".jpg")[0])))
+    with open(os.path.join(directory, name), "wb") as f:
+        f.write(img2pdf.convert(fpictures))
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -64,6 +75,8 @@ def main():
     parser.add_argument("-m", "--movie_interval", type=int,
         help="(beta) Time interval to save the video. For example, 1 if it is the same as the interval of time to take a screenshot, and 2 if it is twice as long. This option is still in beta, so it may not work properly for you. default=1", 
         default=1)
+    parser.add_argument("-P", "--pdf", type=str, default="",
+        help="(beta) Convert captured images to PDF.")
 
     args = parser.parse_args()
 
@@ -73,8 +86,20 @@ def main():
     similarity_tolerance = args.similarity_tolerance
     display = args.display
     movie_interval = args.movie_interval
+    pdf_name = args.pdf
 
     subprocess.run(["mkdir", "-p", directory])
+
+    # set signal handler
+    def finalize(sig, frame):
+        print("\nFinalizing results...")
+        if pdf_name != "":
+            print(f"Converting to PDF: {pdf_name}")
+            convert2pdf(directory, pdf_name)
+        print("\nThank you for using me :)")
+        sys.exit(0)
+    signal.signal(signal.SIGINT, finalize)
+    signal.signal(signal.SIGTERM, finalize)
 
     print("Directory:", directory)
     print(f"progress: 0/{timeout_minute}")
