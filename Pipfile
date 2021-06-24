@@ -10,6 +10,7 @@ pillow = "*"
 imagehash = "*"
 mss = "*"
 gooey = "*"
+img2pdf = "*"
 
 [requires]
 python_version = "3.8"
