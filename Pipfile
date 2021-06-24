@@ -10,6 +10,7 @@ pillow = "*"
 imagehash = "*"
 mss = "*"
 gooey = "*"
+pygi = "*"
 
 [requires]
 python_version = "3.8"
