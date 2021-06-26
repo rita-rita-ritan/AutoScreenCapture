@@ -11,6 +11,8 @@ imagehash = "*"
 mss = "*"
 gooey = "*"
 pygi = "*"
+pycairo = "*"
+pygobject = "*"
 
 [requires]
 python_version = "3.8"
