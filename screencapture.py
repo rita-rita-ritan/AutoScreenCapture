@@ -7,6 +7,8 @@ import mss
 import pathlib
 from gooey import Gooey, GooeyParser
 
+import region_selector
+
 def init_saved_image_number(directory):
     # 前回と同じディレクトリに再び保存する場合に、前回の保存写真の後に続くようにナンバリングする
     # When saving again to the same directory as last time,
@@ -18,9 +20,17 @@ def init_saved_image_number(directory):
         saved_image_number += 1
     return saved_image_number
 
-def get_screenshot_image(display):
+def get_screenshot_image(display, region = None):
     with mss.mss() as sct:
-        sct_img = sct.grab(sct.monitors[display])
+        if region == None:
+            sct_img = sct.grab(sct.monitors[display])
+        else:
+            top = region[0][1]
+            left = region[0][0]
+            width = region[1][0] - region[0][0]
+            height = region[1][1] - region[0][1]
+            monitor = {"top": int(top), "left": int(left), "width": int(width), "height": int(height)}
+            sct_img = sct.grab(monitor)
         img = Image.frombytes("RGB", sct_img.size, sct_img.bgra, "raw", "BGRX")
         return img
 
@@ -60,10 +70,12 @@ def main():
         default=5)
     parser.add_argument("-d", "--display", type=int,
         help="Display where the screenshot will be taken. 1 is main, 2 secondary, etc. default=1",
-        default=1)
+        default=0)
     parser.add_argument("-m", "--movie_interval", type=int,
         help="(beta) Time interval to save the video. For example, 1 if it is the same as the interval of time to take a screenshot, and 2 if it is twice as long. This option is still in beta, so it may not work properly for you. default=1", 
         default=1)
+    parser.add_argument("-r", "--region-selection", action="store_true",
+        help="(beta) Select screen region to capture. (Ubuntu, OSX)")
 
     args = parser.parse_args()
 
@@ -73,8 +85,16 @@ def main():
     similarity_tolerance = args.similarity_tolerance
     display = args.display
     movie_interval = args.movie_interval
+    region_selection = args.region_selection
 
     subprocess.run(["mkdir", "-p", directory])
+
+    # select region
+    if region_selection:
+        region = region_selector.get_region(display)
+        time.sleep(0.5) # delay
+    else:
+        region = None
 
     print("Directory:", directory)
     print(f"progress: 0/{timeout_minute}")
@@ -86,14 +106,14 @@ def main():
     timeout_second = timeout_minute * 60
     successive_non_similar_count = 0
 
-    current_image = get_screenshot_image(display)
+    current_image = get_screenshot_image(display, region)
     current_image.save(f'{directory}/sct-{saved_image_number}.jpg', 'JPEG')
     print(f"Saved screenshot: sct-{saved_image_number}.jpg\n")
     saved_image_number += 1
     pre_image = current_image
 
     while elapsed_time_second < timeout_second:
-        current_image = get_screenshot_image(display)
+        current_image = get_screenshot_image(display, region)
 
         if is_similar_image(current_image, pre_image, similarity_tolerance):
             successive_non_similar_count = 0
